@@ -1,13 +1,13 @@
 <template>
-  <InfinityScroll />
+  <Motivation />
 </template>
 
 <script>
-import InfinityScroll from '@/components/InfinityScroll.vue'
+import Motivation from '@/components/Motivation.vue'
 
 export default {
   name: 'app',
-  components: { InfinityScroll },
+  components: { Motivation },
 }
 </script>
 

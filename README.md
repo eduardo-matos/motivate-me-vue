@@ -1,4 +1,4 @@
-# infinity-scroll
+# Motivate-me
 
 ## Project setup
 ```

@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import InfinityScroll from '@/components/InfinityScroll.vue'
+import Motivation from '@/components/Motivation.vue'
 import scroll from '@/components/scroll'
 import axios from 'axios'
 
@@ -7,7 +7,7 @@ const nextTick = Promise.resolve();
 
 jest.mock('@/components/scroll')
 
-describe('InifinityScroll', () => {
+describe('Motivation', () => {
   beforeEach(() => {
     jest.spyOn(axios, 'get')
       .mockImplementation(() => Promise.resolve({ data: [] }));
@@ -20,7 +20,7 @@ describe('InifinityScroll', () => {
   })
 
   function buildComponent(config = {}) {
-    return shallowMount(InfinityScroll, config);
+    return shallowMount(Motivation, config);
   }
 
   it('renders title when passed', () => {
