@@ -28,6 +28,7 @@ export default {
     };
   },
   mounted() {
+    scroll.start();
     this.removeScrollListener = scroll.on('bottom', this.onBottom.bind(this));
   },
   beforeDestroy() {

@@ -1,23 +1,23 @@
-import { shallowMount } from '@vue/test-utils'
-import Motivation from '@/components/Motivation.vue'
-import scroll from '@/components/scroll'
-import axios from 'axios'
+import { shallowMount } from '@vue/test-utils';
+import Motivation from '@/components/Motivation.vue';
+import scroll from '@/components/scroll';
+import axios from 'axios';
 
 const nextTick = Promise.resolve();
 
-jest.mock('@/components/scroll')
+jest.mock('@/components/scroll');
 
 describe('Motivation', () => {
   beforeEach(() => {
     jest.spyOn(axios, 'get')
       .mockImplementation(() => Promise.resolve({ data: [] }));
-  })
+  });
 
   afterEach(() => {
     axios.get.mockRestore();
     jest.clearAllMocks();
     scroll._offAll();
-  })
+  });
 
   function buildComponent(config = {}) {
     return shallowMount(Motivation, config);
@@ -27,12 +27,12 @@ describe('Motivation', () => {
     const title = 'Dummy title';
     const wrapper = buildComponent({ propsData: { title } });
     expect(wrapper.find('h1').text()).toMatch(title);
-  })
+  });
 
   it('do not show title tag if title is empty', () => {
     const wrapper = buildComponent({ propsData: { title: '' } });
     expect(wrapper.find('h1').exists()).toEqual(false);
-  })
+  });
 
   it('shows initial quotes', () => {
     const wrapper = buildComponent({
@@ -49,12 +49,12 @@ describe('Motivation', () => {
     expect(wrapper.findAll('.quote').at(0).text()).toMatch('Construa algo que seja top');
     expect(wrapper.findAll('.quote').at(1).text()).toMatch('Transforme o seu lifestyle');
     expect(wrapper.findAll('.quote').at(2).text()).toMatch('Viva em busca da masterização e do profissionalismo, every f*ing day');
-  })
+  });
 
   it('do not show quotes wrapper if there are no items to be displayed', () => {
     const wrapper = buildComponent();
     expect(wrapper.find('.quotes').exists()).toEqual(false);
-  })
+  });
 
   it('load more quotes on button click', async () => {
     const wrapper = buildComponent();
@@ -64,7 +64,7 @@ describe('Motivation', () => {
     await nextTick;
 
     expect(wrapper.findAll('.quote').length).toBeGreaterThan(0);
-  })
+  });
 
   it('fetches 10 quotes by default from the backend', async () => {
     const wrapper = buildComponent();
@@ -72,7 +72,7 @@ describe('Motivation', () => {
     wrapper.find('.load-more').trigger('click');
 
     expect(axios.get).toBeCalledWith('/my-server', { params: { max: 10 } });
-  })
+  });
 
   it('sends how many quotes can be fetched from the backend', async () => {
     const wrapper = buildComponent();
@@ -81,7 +81,7 @@ describe('Motivation', () => {
     wrapper.find('.load-more').trigger('click');
 
     expect(axios.get).toBeCalledWith('/my-server', { params: { max: 4 } });
-  })
+  });
 
   it('loads more data when bottom has reached', () => {
     buildComponent();
@@ -90,7 +90,15 @@ describe('Motivation', () => {
 
     expect(axios.get).toBeCalled();
     expect(scroll.on).toHaveBeenCalledWith('bottom', expect.any(Function));
-  })
+  });
+
+  it('starts scroll on init', () => {
+    expect(scroll.start).not.toHaveBeenCalled();
+
+    buildComponent();
+
+    expect(scroll.start).toHaveBeenCalled();
+  });
 
   it('removes event listener when component is destroyed', () => {
     const wrapper = buildComponent();
@@ -98,5 +106,5 @@ describe('Motivation', () => {
     wrapper.destroy();
 
     expect(scroll.on.mock.results[0].value).toHaveBeenCalled();
-  })
+  });
 })
