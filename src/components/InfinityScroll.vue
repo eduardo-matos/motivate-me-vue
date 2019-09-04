@@ -25,23 +25,23 @@ export default {
       images: this.items || [],
       uid: Math.random().toString().substring(2),
       maxItems: 10,
-    }
+    };
   },
   mounted() {
-    this.removeScrollListener = scroll.on('bottom', this.onBottom.bind(this))
+    this.removeScrollListener = scroll.on('bottom', this.onBottom.bind(this));
   },
   beforeDestroy() {
-    this.removeScrollListener()
+    this.removeScrollListener();
   },
   methods: {
     loadMore() {
       axios.get('/my-server', { params: { max: parseInt(this.maxItems) } }).then(response => {
-        this.images.push(...response.data)
-      })
+        this.images.push(...response.data);
+      });
     },
     onBottom() {
-      this.loadMore()
-    }
-  }
+      this.loadMore();
+    },
+  },
 }
 </script>

@@ -8,14 +8,14 @@ function onScrollCallback() {
   }
 }
 
-window.addEventListener('scroll', onScrollCallback)
+window.addEventListener('scroll', onScrollCallback);
 
 export default {
   on(evt, callback) {
-    eventEmitter.on(evt, callback)
-    return () => eventEmitter.removeListener(callback)
+    eventEmitter.on(evt, callback);
+    return () => eventEmitter.removeListener(callback);
   },
   off() {
-    window.removeEventListener(onScrollCallback)
+    window.removeEventListener(onScrollCallback);
   }
 }
