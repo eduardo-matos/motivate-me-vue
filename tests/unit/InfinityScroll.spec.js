@@ -34,36 +34,39 @@ describe('InifinityScroll', () => {
     expect(wrapper.find('h1').exists()).toEqual(false);
   })
 
-  it('shows initial items', () => {
+  it('shows initial quotes', () => {
     const wrapper = buildComponent({
       propsData: {
         items: [
-          { id: 1, img: 'https://placekitten.com/10/20' },
-          { id: 2, img: 'https://placekitten.com/10/30' },
-          { id: 3, img: 'https://placekitten.com/20/10' },
+          { id: 1, text: 'Construa algo que seja top' },
+          { id: 2, text: 'Transforme o seu lifestyle' },
+          { id: 3, text: 'Viva em busca da masterização e do profissionalismo, every f*ing day' },
         ],
       },
     });
 
-    expect(wrapper.findAll('.item').length).toEqual(3);
+    expect(wrapper.findAll('.quote').length).toEqual(3);
+    expect(wrapper.findAll('.quote').at(0).text()).toMatch('Construa algo que seja top');
+    expect(wrapper.findAll('.quote').at(1).text()).toMatch('Transforme o seu lifestyle');
+    expect(wrapper.findAll('.quote').at(2).text()).toMatch('Viva em busca da masterização e do profissionalismo, every f*ing day');
   })
 
-  it('do not show items wrapper if there are no items to be displayed', () => {
+  it('do not show quotes wrapper if there are no items to be displayed', () => {
     const wrapper = buildComponent();
-    expect(wrapper.find('.items').exists()).toEqual(false);
+    expect(wrapper.find('.quotes').exists()).toEqual(false);
   })
 
-  it('load more items on button click', async () => {
+  it('load more quotes on button click', async () => {
     const wrapper = buildComponent();
     axios.get.mockResolvedValue({ data: [{ id: 9, img: 'spam' }] });
 
     wrapper.find('.load-more').trigger('click');
     await nextTick;
 
-    expect(wrapper.findAll('.item').length).toBeGreaterThan(0);
+    expect(wrapper.findAll('.quote').length).toBeGreaterThan(0);
   })
 
-  it('fetches 10 items by default from the backend', async () => {
+  it('fetches 10 quotes by default from the backend', async () => {
     const wrapper = buildComponent();
 
     wrapper.find('.load-more').trigger('click');
@@ -71,7 +74,7 @@ describe('InifinityScroll', () => {
     expect(axios.get).toBeCalledWith('/my-server', { params: { max: 10 } });
   })
 
-  it('sends how many items can be fetched from the backend', async () => {
+  it('sends how many quotes can be fetched from the backend', async () => {
     const wrapper = buildComponent();
 
     wrapper.find('.max-items').setValue('4');
