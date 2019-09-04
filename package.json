@@ -9,7 +9,10 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "events": "^3.0.0",
+    "random-int": "^2.0.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

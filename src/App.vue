@@ -1,18 +1,13 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <InfinityScroll />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import InfinityScroll from '@/components/InfinityScroll.vue'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  components: { InfinityScroll },
 }
 </script>
 
